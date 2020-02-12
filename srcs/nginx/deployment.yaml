@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-nginx
+spec:
+  selector:
+    matchLabels:
+      app: deployment-nginx
+  template:
+    metadata:
+      labels:
+        app: deployment-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: my-nginx
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+        - containerPort: 22
+          name: ssh
+        - containerPort: 5050
+          name: wp
+        - containerPort: 5000
+          name: pma
+        volumeMounts:
+        - name: pstore-wordpress
+          mountPath: /fakemnt/wp/
+        - name: pstore-pma
+          mountPath: /fakemnt/pma/
+      volumes:
+      - name: pstore-wordpress
+        persistentVolumeClaim:
+          claimName: pvc-wordpress
+      - name: pstore-pma
+        persistentVolumeClaim:
+          claimName: pvc-pma

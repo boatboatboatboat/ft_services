@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-influxdb
+spec:
+  selector:
+    matchLabels:
+      app: deployment-influxdb
+  template:
+    metadata:
+      labels:
+        app: deployment-influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: my-influxdb
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: "INFLUXDB_DB"
+          value: "influxdbruh"
+        - name: "INFLUXDB_ADMIN_USER"
+          value: "user_admin"
+        - name: "INFLUXDB_ADMIN_PASSWORD"
+          value: "neef"
+        - name: "INFLUXDB_USER"
+          value: "user_all"
+        - name: "INFLUXDB_PASSWORD"
+          value: "neef"
+        - name: "INFLUXDB_READ_USER"
+          value: "user_read"
+        - name: "INFLUXDB_READ_USER_PASSWORD"
+          value: "neef"
+        - name: "INFLUXDB_WRITE_USER"
+          value: "user_write"
+        - name: "INFLUXDB_WRITE_USER_PASSWORD"
+          value: "neef"
+        ports:
+        - containerPort: 8086
+          name: api

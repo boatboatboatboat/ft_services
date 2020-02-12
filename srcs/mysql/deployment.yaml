@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-mysql
+spec:
+  selector:
+    matchLabels:
+      app: deployment-mysql
+  template:
+    metadata:
+      labels:
+        app: deployment-mysql
+    spec:
+      containers:
+      - name: mysql
+        image: my-mysql
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: "DB_USER"
+          value: "bruhuser"
+        - name: "DB_PASS"
+          value: "bruhpass"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: pstore-mysql
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: pstore-mysql
+        persistentVolumeClaim:
+          claimName: pvc-mysql

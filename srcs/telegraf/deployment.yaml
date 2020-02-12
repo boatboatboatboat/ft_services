@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-telegraf
+spec:
+  selector:
+    matchLabels:
+      app: deployment-telegraf
+  template:
+    metadata:
+      labels:
+        app: deployment-telegraf
+    spec:
+      containers:
+      - name: telegraf
+        image: my-telegraf
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      volumes:
+      - name: cfg-telegraf
+        configMap:
+          name: cfg-telegraf

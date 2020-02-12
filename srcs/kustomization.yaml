@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ingress/nginx.yaml
+- nginx/deployment.yaml
+- nginx/service.yaml
+- ftps/deployment.yaml
+- mysql/pvc.yaml
+- mysql/deployment.yaml
+- mysql/service.yaml
+- wordpress/pvc.yaml
+- wordpress/deployment.yaml
+- wordpress/service.yaml
+- phpmyadmin/pvc.yaml
+- phpmyadmin/deployment.yaml
+- phpmyadmin/service.yaml
+- grafana/deployment.yaml
+- grafana/service.yaml
+- influxdb/deployment.yaml
+- influxdb/service.yaml
+- telegraf/deployment.yaml
+
+secretGenerator:
+  - name: pass-mysql
+    literals:
+    - password=bruh
+
+namespace: default

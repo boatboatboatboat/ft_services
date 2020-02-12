@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-pma
+spec:
+  selector:
+    matchLabels:
+      app: deployment-pma
+  template:
+    metadata:
+      labels:
+        app: deployment-pma
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: my-pma
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: "PMA_HOST"
+          value: "service-mysql.default.svc.cluster.local"
+        - name: "PMA_PORT"
+          value: "3306"
+        ports:
+        - containerPort: 9000
+        volumeMounts:
+        - name: pstore-pma
+          mountPath: /var/www/html
+      volumes:
+      - name: pstore-pma
+        persistentVolumeClaim:
+          claimName: pvc-pma

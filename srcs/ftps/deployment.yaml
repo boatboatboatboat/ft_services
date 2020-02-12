@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-ftps
+spec:
+  selector:
+    matchLabels:
+      app: deployment-ftps
+  template:
+    metadata:
+      labels:
+        app: deployment-ftps
+    spec:
+      containers:
+      - name: ftps
+        image: my-ftps
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 20
+          hostPort: 20
+          name: ftpsdata
+        - containerPort: 21
+          hostPort: 21
+          name: ftpscontrol
+        - containerPort: 420
+          hostPort: 420
+          name: pasvport0
+        - containerPort: 421
+          hostPort: 421
+          name: pasvport1
+        - containerPort: 422
+          hostPort: 422
+          name: pasvport2
+        - containerPort: 423
+          hostPort: 423
+          name: pasvport3
