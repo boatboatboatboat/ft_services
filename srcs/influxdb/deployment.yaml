@@ -41,3 +41,10 @@ spec:
         ports:
         - containerPort: 8086
           name: api
+        volumeMounts:
+        - name: pstore-influxdb
+          mountPath: /var/lib/influxdb
+      volumes:
+      - name: pstore-influxdb
+        persistentVolumeClaim:
+          claimName: pvc-influxdb

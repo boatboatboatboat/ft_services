@@ -48,14 +48,6 @@ logc		"Checking if VirtualBox is installed..."
 virtualbox	-h >> log.txt 2>>log.txt
 errc
 
-#logc		"Checking if Helm is installed..."
-#helm		version >> log.txt 2>>log.txt
-#errc
-#
-#logc		"Adding Helm stable repository..."
-#helm		repo add stable https://kubernetes-charts.storage.googleapis.com
-#errc
-
 if [ "$1" != "ss" ]; then
 logc		"Deleting minikube..."
 minikube	delete >> log.txt 2>>log.txt
@@ -107,6 +99,7 @@ minikube	start \
 			--memory=2558 \
 			--disk-size=20g \
 			--cpus=6 \
+			--bootstrapper=kubeadm \
 			--extra-config=apiserver.service-node-port-range=10-10000 \
 			>> log.txt 2>>log.txt
 errc
@@ -131,11 +124,11 @@ logc		"Building NGINX Docker image..."
 docker		build srcs/nginx/ -t my-nginx >> log.txt 2>>log.txt
 errc
 
-if [ "$1" != "tig" ]; then
-
 logc		"Building FTPS Docker image..."
 docker		build srcs/ftps/ -t my-ftps >> log.txt 2>>log.txt
 errc
+
+if [ "$1" != "tig" ]; then
 
 logc		"Building MySQL Docker image..."
 docker		build srcs/mysql/ -t my-mysql >> log.txt 2>>log.txt
@@ -160,7 +153,7 @@ logc		"Building InfluxDB Docker image..."
 docker		build srcs/influxdb/ -t my-influxdb >> log.txt 2>>log.txt
 errc
 
-logc		"Deploying Telegraf..."
+logc		"Building Telegraf Docker image..."
 docker		build srcs/telegraf/ -t my-telegraf >> log.txt 2>>log.txt
 errc
 
@@ -183,3 +176,7 @@ do
 		> tmplog
 done
 cat tmplog
+rm -f tmplog
+
+echo
+minikube dashboard &

@@ -1,0 +1,22 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: InfluxDB
+    orgId: 1
+
+datasources:
+- name: InfluxDB
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://service-influxdb.default.svc.cluster.local:8086/
+  user: user_admin
+  database: influxdbruh
+  basicAuth: false
+  isDefault: true
+  jsonData:
+    httpMode: "GET"
+  secureJsonData:
+    password: neef
+  version: 1
+  editable: false

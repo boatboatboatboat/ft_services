@@ -17,9 +17,11 @@ resources:
 - phpmyadmin/service.yaml
 - grafana/deployment.yaml
 - grafana/service.yaml
+- influxdb/pvc.yaml
 - influxdb/deployment.yaml
 - influxdb/service.yaml
 - telegraf/deployment.yaml
+- telegraf/rbac.yaml
 
 secretGenerator:
   - name: pass-mysql

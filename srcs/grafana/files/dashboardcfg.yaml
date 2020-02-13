@@ -1,0 +1,20 @@
+apiVersion: 1
+
+providers:
+- name: 'default'
+  orgId: 1
+  folder: ''
+  folderUid: ''
+  type: file
+  options:
+    path: /cpfiles/dashboards
+- name: 'bruhprovider'
+  orgId: 1
+  folder: 'bruhfolder'
+  type: file
+  disableDeletion: false
+  editable: true
+  updateIntervalSeconds: 10
+  allowUiUpdates: false
+  options:
+    path: /cpfiles/dashboards/
